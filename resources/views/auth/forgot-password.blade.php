@@ -42,6 +42,13 @@
                                 </div>
                             </div>
                         </form>
+                        
+                        <div class="form-group mb-0 row mt-2">
+                            <div class="col-sm-5 mt-3">
+                                <a href="{{ route('login') }}" class="text-muted"><i
+                                        class="mdi mdi-account-circle"></i> {{ __('Login') }} </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- end cardbody -->
