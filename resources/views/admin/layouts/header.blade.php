@@ -395,8 +395,15 @@
                     <a class="dropdown-item" href="#"><i class="ri-lock-unlock-line align-middle me-1"></i>
                         Lock screen</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-danger" href="#"><i
-                            class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</a>
+
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <a class="dropdown-item text-danger" href="#"
+                            onclick="event.preventDefault();
+                    this.closest('form').submit();"><i
+                                class="ri-shut-down-line align-middle me-1 text-danger"></i>{{ __('Logout') }}</a>
+                    </form>
+
                 </div>
             </div>
         </div>
