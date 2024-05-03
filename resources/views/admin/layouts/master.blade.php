@@ -26,6 +26,8 @@
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- Toastr Css -->
+    <link rel="stylesheet" href="{{ asset('assets/css/toastr.min.css') }}">
     <!-- App Css-->
     <link href="{{ asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
 
@@ -75,9 +77,22 @@
     <script src="{{ asset('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
 
     <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script>
-
+    <!-- Toastr js -->
+    <script src="{{ asset('assets/js/pages/toastr.min.js') }}"></script>
     <!-- App js -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
+
+    <!-- Show dynamic error messages -->
+    <script>
+        toastr.options.progressBar = true;
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                // Display an info toast with no title
+                toastr.error("{{ $error }}")
+            @endforeach
+        @endif
+    </script>
 
     @stack('scripts')
 </body>
