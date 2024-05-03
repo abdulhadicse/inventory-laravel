@@ -42,6 +42,3 @@
         </div>
     </div>
 </div>
-
-
-{{ dd($errors, $errors->all())  }}
