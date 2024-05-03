@@ -9,52 +9,57 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class ProfileController extends Controller
-{
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
-    {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
-    }
+class ProfileController extends Controller {
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
+	/**
+	 * Display the user's profile form.
+	 */
+	public function edit( Request $request ): View {
+		return view(
+			'profile.edit',
+			array(
+				'user' => $request->user(),
+			)
+		);
+	}
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+	/**
+	 * Update the user's profile information.
+	 */
+	public function update( ProfileUpdateRequest $request ): RedirectResponse {
+		$request->user()->fill( $request->validated() );
 
-        $request->user()->save();
+		if ( $request->user()->isDirty( 'email' ) ) {
+			$request->user()->email_verified_at = null;
+		}
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    }
+		$request->user()->save();
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+		toastr( 'Profile information has been successfully updated.', 'success' );
 
-        $user = $request->user();
+		return Redirect::route( 'profile.edit' )->with( 'status', 'profile-updated' );
+	}
 
-        Auth::logout();
+	/**
+	 * Delete the user's account.
+	 */
+	public function destroy( Request $request ): RedirectResponse {
+		$request->validateWithBag(
+			'userDeletion',
+			array(
+				'password' => array( 'required', 'current_password' ),
+			)
+		);
 
-        $user->delete();
+		$user = $request->user();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+		Auth::logout();
 
-        return Redirect::to('/');
-    }
+		$user->delete();
+
+		$request->session()->invalidate();
+		$request->session()->regenerateToken();
+
+		return Redirect::to( '/' );
+	}
 }
