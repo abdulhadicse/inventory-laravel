@@ -10,8 +10,8 @@
             </div>
             <div class="mt-3">
                 <h4 class="font-size-16 mb-1">{{ auth()->user()->name }}</h4>
-                <span class="text-muted"><i
-                        class="ri-record-circle-line align-middle font-size-14 text-success"></i> Online</span>
+                <span class="text-muted"><i class="ri-record-circle-line align-middle font-size-14 text-success"></i>
+                    Online</span>
             </div>
         </div>
 
@@ -23,8 +23,7 @@
 
                 <li>
                     <a href="index.html" class="waves-effect">
-                        <i class="ri-dashboard-line"></i><span
-                            class="badge rounded-pill bg-success float-end">3</span>
+                        <i class="ri-dashboard-line"></i><span class="badge rounded-pill bg-success float-end">3</span>
                         <span>Dashboard</span>
                     </a>
                 </li>
@@ -32,11 +31,44 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-mail-send-line"></i>
-                        <span>Suppliers</span>
+                        <span>{{ __('Manage Suppliers') }}</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('supplier.list') }}">All Suppliers</a></li>
-                        <li><a href="{{ route('supplier.add') }}">Add Supplier</a></li>
+                        <li><a href="{{ route('supplier.list') }}">{{ __('All Suppliers') }}</a></li>
+                        <li><a href="{{ route('supplier.add') }}">{{ __('Add Supplier') }}</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-mail-send-line"></i>
+                        <span>{{ __('Manage Units') }}</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('unit.list') }}">{{ __('All Units') }}</a></li>
+                        <li><a href="{{ route('unit.add') }}">{{ __('Add Unit') }}</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-mail-send-line"></i>
+                        <span>{{ __('Manage Customers') }}</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('customer.list') }}">{{ __('All Customers') }}</a></li>
+                        <li><a href="{{ route('customer.add') }}">{{ __('Add Customer') }}</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-mail-send-line"></i>
+                        <span>{{ __('Manage Categories') }}</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('category.list') }}">{{ __('All Categories') }}</a></li>
+                        <li><a href="{{ route('category.add') }}">{{ __('Add Category') }}</a></li>
                     </ul>
                 </li>
             </ul>

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+
+    /**
+	 * No fields are guarded.
+	 *
+	 * @var array
+	 */
+	protected $guarded = array();
 }

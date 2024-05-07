@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
+
+    /**
+	 * No fields are guarded.
+	 *
+	 * @var array
+	 */
+	protected $guarded = array();
 }

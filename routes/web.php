@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Pos\CategoryController;
+use App\Http\Controllers\Pos\CustomerController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pos\SupplierController;
+use App\Http\Controllers\Pos\UnitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +54,57 @@ Route::resource(
 			'update'  => 'supplier.update',
 			'store'   => 'supplier.save',
 			'destroy' => 'supplier.delete',
+		),
+	)
+)->middleware( 'auth' );
+
+// Unit Routes.
+Route::resource(
+	'unit',
+	UnitController::class,
+	array(
+		'names' => array(
+			'index'   => 'unit.list',
+			'show'    => 'unit.view',
+			'create'  => 'unit.add',
+			'edit'    => 'unit.edit',
+			'update'  => 'unit.update',
+			'store'   => 'unit.save',
+			'destroy' => 'unit.delete',
+		),
+	)
+)->middleware( 'auth' );
+
+// Customer Routes.
+Route::resource(
+	'customer',
+	CustomerController::class,
+	array(
+		'names' => array(
+			'index'   => 'customer.list',
+			'show'    => 'customer.view',
+			'create'  => 'customer.add',
+			'edit'    => 'customer.edit',
+			'update'  => 'customer.update',
+			'store'   => 'customer.save',
+			'destroy' => 'customer.delete',
+		),
+	)
+)->middleware( 'auth' );
+
+// Category Routes.
+Route::resource(
+	'category',
+	CategoryController::class,
+	array(
+		'names' => array(
+			'index'   => 'category.list',
+			'show'    => 'category.view',
+			'create'  => 'category.add',
+			'edit'    => 'category.edit',
+			'update'  => 'category.update',
+			'store'   => 'category.save',
+			'destroy' => 'category.delete',
 		),
 	)
 )->middleware( 'auth' );
