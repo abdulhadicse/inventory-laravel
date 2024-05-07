@@ -30,7 +30,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-mail-send-line"></i>
+                        <i class=" ri-home-line"></i>
                         <span>{{ __('Manage Suppliers') }}</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -41,7 +41,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-mail-send-line"></i>
+                        <i class="ri-community-line"></i>
                         <span>{{ __('Manage Units') }}</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -52,7 +52,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-mail-send-line"></i>
+                        <i class="ri-file-user-line"></i>
                         <span>{{ __('Manage Customers') }}</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -63,7 +63,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-mail-send-line"></i>
+                        <i class="ri-stack-line"></i>
                         <span>{{ __('Manage Categories') }}</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
