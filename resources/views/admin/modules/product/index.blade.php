@@ -51,9 +51,9 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $product->name }}</td>
                                             <td>{{ $product->quantity }}</td>
-                                            <td>{{ $product['supplier']['name'] }}</td>
-                                            <td>{{ $product['unit']['name'] }}</td>
-                                            <td>{{ $product['category']['name'] }}</td>
+                                            <td>{{ isset($product['supplier']['name']) ?? $product['supplier']['name'] }}</td>
+                                            <td>{{ isset($product['unit']['name']) ?? $product['unit']['name'] }}</td>
+                                            <td>{{ isset($product['category']['name']) ?? $product['category']['name'] }}</td>
                                             <td>{{ $product->status ? __('Active') : __('Inactive') }}</td>
                                             <td style="width: 100px">
                                                 <a href="{{ route('product.edit', $product->id) }}"
