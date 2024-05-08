@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Pos;
 
-use Illuminate\Http\Request;
 use App\Services\Unit\UnitService;
 use App\Http\Controllers\Controller;
 use App\Services\Product\ProductService;

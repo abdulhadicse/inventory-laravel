@@ -15,7 +15,7 @@ class ProductService {
 	 * @return \Illuminate\Database\Eloquent\Collection
 	 */
 	public function list() {
-		return Product::latest()->get();
+		return Product::with( array( 'supplier:id,name', 'unit:id,name', 'category:id,name' ) )->latest()->get();
 	}
 
 	/**
