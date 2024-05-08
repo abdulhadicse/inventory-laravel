@@ -1,12 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Pos\UnitController;
+use App\Http\Controllers\Pos\ProductController;
 use App\Http\Controllers\Pos\CategoryController;
 use App\Http\Controllers\Pos\CustomerController;
-use App\Http\Controllers\Pos\ProductController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Pos\PurchaseController;
 use App\Http\Controllers\Pos\SupplierController;
-use App\Http\Controllers\Pos\UnitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -123,6 +124,23 @@ Route::resource(
 			'update'  => 'product.update',
 			'store'   => 'product.save',
 			'destroy' => 'product.delete',
+		),
+	)
+)->middleware( 'auth' );
+
+// Product Routes.
+Route::resource(
+	'purchase',
+	PurchaseController::class,
+	array(
+		'names' => array(
+			'index'   => 'purchase.list',
+			'show'    => 'purchase.view',
+			'create'  => 'purchase.add',
+			'edit'    => 'purchase.edit',
+			'update'  => 'purchase.update',
+			'store'   => 'purchase.save',
+			'destroy' => 'purchase.delete',
 		),
 	)
 )->middleware( 'auth' );

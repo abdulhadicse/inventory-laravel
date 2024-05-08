@@ -82,6 +82,17 @@
                         <li><a href="{{ route('product.add') }}">{{ __('Add Product') }}</a></li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-currency-line"></i>
+                        <span>{{ __('Manage Purchase') }}</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('purchase.list') }}">{{ __('All Purchases') }}</a></li>
+                        <li><a href="{{ route('purchase.add') }}">{{ __('Add Purchase') }}</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
         <!-- Sidebar -->

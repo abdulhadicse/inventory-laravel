@@ -35,8 +35,7 @@
                                 <thead>
                                     <tr>
                                         <th>{{ __('Serial No') }}</th>
-                                        <th>{{ __('Name') }}</th>
-                                        <th>{{ __('Quantity') }}</th>
+                                        <th>{{ __('Product Name') }}</th>
                                         <th>{{ __('Supplier') }}</th>
                                         <th>{{ __('Unit') }}</th>
                                         <th>{{ __('Category') }}</th>
@@ -50,7 +49,6 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $product->name }}</td>
-                                            <td>{{ $product->quantity }}</td>
                                             <td>{{ $product->supplier->name }}</td>
                                             <td>{{ $product->unit->name }}</td>
                                             <td>{{ $product->category->name }}</td>
