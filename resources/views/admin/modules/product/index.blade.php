@@ -51,16 +51,16 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $product->name }}</td>
                                             <td>{{ $product->quantity }}</td>
-                                            <td>{{ $product->supplier_id }}</td>
-                                            <td>{{ $product->unit_id }}</td>
-                                            <td>{{ $product->category_id }}</td>
+                                            <td>{{ $product['supplier']['name'] }}</td>
+                                            <td>{{ $product['unit']['name'] }}</td>
+                                            <td>{{ $product['category']['name'] }}</td>
                                             <td>{{ $product->status ? __('Active') : __('Inactive') }}</td>
                                             <td style="width: 100px">
                                                 <a href="{{ route('product.edit', $product->id) }}"
                                                     class="btn btn-outline-info btn-sm edit" title="Edit">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
-                                                <form style="display: inline-block" method="POST" action="{{ route('product.delete', $supplier->id) }}">
+                                                <form style="display: inline-block" method="POST" action="{{ route('product.delete', $product->id) }}">
                                                     @csrf
                                                     @method('delete')
                                                     <a href="#" onclick="event.preventDefault();

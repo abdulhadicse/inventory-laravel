@@ -2,76 +2,113 @@
 
 namespace App\Http\Controllers\Pos;
 
+use Illuminate\Http\Request;
+use App\Services\Unit\UnitService;
 use App\Http\Controllers\Controller;
 use App\Services\Product\ProductService;
-use Illuminate\Http\Request;
+use App\Services\Category\CategoryService;
+use App\Services\Supplier\SupplierService;
+use App\Http\Requests\Product\ProductStoreRequest;
 
-class ProductController extends Controller
-{
-    private ProductService $productService;
+class ProductController extends Controller {
+
+	private ProductService $productService;
 
 	/**
-	 * Constructor for SupplierController.
+	 * Constructor for ProductController.
 	 *
-	 * @param SupplierService $supplierService
+	 * @param ProductService $productService The ProductService instance.
 	 */
 	public function __construct( ProductService $productService ) {
 		$this->productService = $productService;
 	}
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $products = $this->productService->list();
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Contracts\View\View The view for listing products.
+	 */
+	public function index() {
+		$products = $this->productService->list();
 		return view( 'admin.modules.product.index', compact( 'products' ) );
-    }
+	}
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Contracts\View\View The view for creating a new product.
+	 */
+	public function create() {
+		$units      = ( new UnitService() )->list();
+		$categories = ( new CategoryService() )->list();
+		$suppliers  = ( new SupplierService() )->list();
+		return view( 'admin.modules.product.create', compact( 'units', 'categories', 'suppliers' ) );
+	}
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param ProductStoreRequest $request The request containing validated product data.
+	 * @return \Illuminate\Http\RedirectResponse Redirect to the product list view.
+	 */
+	public function store( ProductStoreRequest $request ) {
+		$this->productService->store( $request->validated() );
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+		toastr( 'Product added successfully.', 'success' );
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+		return redirect()->route( 'product.list' );
+	}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param string $id The ID of the product to display.
+	 * @return void
+	 */
+	public function show( string $id ) {
+		// Method not implemented
+	}
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param string $id The ID of the product to edit.
+	 * @return \Illuminate\Contracts\View\View The view for editing a product.
+	 */
+	public function edit( string $id ) {
+		$units      = ( new UnitService() )->list();
+		$categories = ( new CategoryService() )->list();
+		$suppliers  = ( new SupplierService() )->list();
+		$product    = $this->productService->findProduct( $id );
+		return view( 'admin.modules.product.edit', compact( 'product', 'units', 'categories', 'suppliers' ) );
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param ProductStoreRequest $request The request containing validated product data.
+	 * @param string              $id The ID of the product to update.
+	 * @return \Illuminate\Http\RedirectResponse Redirect to the product list view.
+	 */
+	public function update( ProductStoreRequest $request, string $id ) {
+		$this->productService->update( $request->validated(), $id );
+
+		toastr( 'Product updated successfully.', 'success' );
+
+		return redirect()->route( 'product.list' );
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param string $id The ID of the product to delete.
+	 * @return \Illuminate\Http\RedirectResponse Redirect to the product list view.
+	 */
+	public function destroy( string $id ) {
+		$this->productService->deleteProduct( $id );
+
+		toastr( 'Product deleted successfully.', 'success' );
+
+		return redirect()->route( 'product.list' );
+	}
 }

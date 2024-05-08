@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 class ProductService {
 
 	/**
-	 * List all suppliers.
+	 * List all products.
 	 *
 	 * @return \Illuminate\Database\Eloquent\Collection
 	 */
@@ -19,64 +19,64 @@ class ProductService {
 	}
 
 	/**
-	 * Store a new supplier.
+	 * Store a new product.
 	 *
-	 * @param array $supplierData The data for the new supplier.
-	 * @return Supplier The created supplier instance.
+	 * @param array $productData The data for the new product.
+	 * @return Product The created product instance.
 	 * @throws ValidationException
 	 */
-	public function store( array $supplierData ): Supplier {
+	public function store( array $productData ): Product {
 		// Add created by user.
-		$supplierData['created_by'] = Auth::id();
+		$productData['created_by'] = Auth::id();
 
-		// Create supplier.
-		$supplier = Product::create( $supplierData );
+		// Create product.
+		$product = Product::create( $productData );
 
-		return $supplier;
+		return $product;
 	}
 
 	/**
-	 * Update an existing supplier.
+	 * Update an existing product.
 	 *
-	 * @param string $id The ID of the supplier to update.
-	 * @param array  $supplierData The updated data for the supplier.
-	 * @return Supplier The updated supplier instance.
+	 * @param array  $productData The updated data for the product.
+	 * @param string $id The ID of the product to update.
+	 * @return Product The updated product instance.
 	 * @throws ModelNotFoundException
 	 * @throws ValidationException
 	 */
-	public function update( array $supplierData, string $id ): Supplier {
-		// Find supplier by ID.
-		$supplier = Product::findOrFail( $id );
+	public function update( array $productData, string $id ): Product {
+		// Find product by ID.
+		$product = Product::findOrFail( $id );
 
-		// Update supplier data.
-		$supplier->fill( $supplierData );
-		$supplier->updated_by = Auth::id();
-		$supplier->save();
+		// Update product data.
+		$product->fill( $productData );
+		$product->updated_by = Auth::id();
+		$product->save();
 
-		return $supplier;
+		return $product;
 	}
 
 	/**
-	 * Find a supplier by its ID.
+	 * Find a product by its ID.
 	 *
-	 * @param string $id The ID of the supplier to find.
-	 * @return \App\Models\Supplier The supplier model instance.
-	 * @throws ModelNotFoundException If no supplier is found with the given ID.
+	 * @param string $id The ID of the product to find.
+	 * @return \App\Models\Product The product model instance.
+	 * @throws ModelNotFoundException If no product is found with the given ID.
 	 */
-	public function findSupplier( string $id ) {
+	public function findProduct( string $id ) {
 		return Product::findOrFail( $id );
 	}
 
 	/**
-	 * Delete a supplier by its ID.
+	 * Delete a product by its ID.
 	 *
-	 * @param string $id The ID of the supplier to delete.
-	 * @return bool True if the supplier is successfully deleted.
-	 * @throws ModelNotFoundException If no supplier is found with the given ID.
+	 * @param string $id The ID of the product to delete.
+	 * @return bool True if the product is successfully deleted.
+	 * @throws ModelNotFoundException If no product is found with the given ID.
 	 */
-	public function deleteSupplier( string $id ) {
-		$supplier = Product::findOrFail( $id );
-		$supplier->delete();
+	public function deleteProduct( string $id ) {
+		$product = Product::findOrFail( $id );
+		$product->delete();
 
 		return true;
 	}

@@ -7,12 +7,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Add Supplier') }}</h4>
+                        <h4 class="mb-sm-0">{{ __('Add Product') }}</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">{{ __('Suppliers') }}</a></li>
-                                <li class="breadcrumb-item active">{{ __('Add Supplier') }}</li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">{{ __('Products') }}</a></li>
+                                <li class="breadcrumb-item active">{{ __('Add Product') }}</li>
                             </ol>
                         </div>
 
@@ -26,40 +26,52 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <h4 class="card-title">{{ __('Add Supplier') }}</h4>
-                            <p class="card-title-desc">{{ __('Add new suppliers effortlessly with a streamlined form for quick integration.') }}</p>
-                            <form method="POST" action="{{ route('supplier.save') }}">
+                            <h4 class="card-title">{{ __('Add Product') }}</h4>
+                            <p class="card-title-desc">{{ __('Add new products effortlessly with a streamlined form for quick integration.') }}</p>
+                            <form method="POST" action="{{ route('product.save') }}">
                                 @csrf
                                 <div class="row mb-3">
                                     <label for="name" class="col-sm-2 col-form-label">{{ __('Name') }}</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="name" type="text" placeholder="Supplier name"
+                                        <input class="form-control" name="name" type="text" placeholder="Product name"
                                             id="name" value="{{ old('name') }}">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="email" class="col-sm-2 col-form-label">{{ __('Email') }}</label>
+                                    <label class="col-sm-2 col-form-label">{{ __('Supplier Name') }}</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="email" type="email" placeholder="Supplier email"
-                                            id="email" value="{{ old('email') }}">
+                                        <select name="supplier_id" class="form-select" aria-label="Supplier">
+                                            <option selected="">{{ __('Open this select supplier') }}</option>
+                                            @foreach ( $suppliers as $supplier )
+                                                <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                            @endforeach
+                                            </select>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="mobile" class="col-sm-2 col-form-label">{{ __('Mobile No') }}</label>
+                                    <label class="col-sm-2 col-form-label">{{ __('Unit Name') }}</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="mobile_no" type="text" placeholder="Supplier mobile number"
-                                            id="mobile">
+                                        <select name="unit_id" class="form-select" aria-label="Unit">
+                                            <option selected="">{{ __('Open this select unit') }}</option>
+                                            @foreach ( $units as $unit )
+                                                <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                            @endforeach
+                                            </select>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="address" class="col-sm-2 col-form-label">{{ __('Address') }}</label>
+                                    <label class="col-sm-2 col-form-label">{{ __('Category Name') }}</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="address" type="text" placeholder="Supplier address"
-                                            id="address" value="{{ old('address') }}">
+                                        <select name="category_id" class="form-select" aria-label="Category">
+                                            <option selected="">{{ __('Open this select category') }}</option>
+                                            @foreach ( $categories as $category )
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
+                                            </select>
                                     </div>
                                 </div>
 
-                                <button class="btn btn-dark waves-effect waves-light text-uppercase" type="submit">{{ __('Add Supplier') }}</button>
+                                <button class="btn btn-dark waves-effect waves-light text-uppercase" type="submit">{{ __('Add Product') }}</button>
                             </form>
                         </div>
                     </div>
