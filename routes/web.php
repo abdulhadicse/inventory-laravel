@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Pos\CategoryController;
 use App\Http\Controllers\Pos\CustomerController;
+use App\Http\Controllers\Pos\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pos\SupplierController;
@@ -105,6 +106,23 @@ Route::resource(
 			'update'  => 'category.update',
 			'store'   => 'category.save',
 			'destroy' => 'category.delete',
+		),
+	)
+)->middleware( 'auth' );
+
+// Product Routes.
+Route::resource(
+	'product',
+	ProductController::class,
+	array(
+		'names' => array(
+			'index'   => 'product.list',
+			'show'    => 'product.view',
+			'create'  => 'product.add',
+			'edit'    => 'product.edit',
+			'update'  => 'product.update',
+			'store'   => 'product.save',
+			'destroy' => 'product.delete',
 		),
 	)
 )->middleware( 'auth' );
