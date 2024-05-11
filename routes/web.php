@@ -130,6 +130,7 @@ Route::resource(
 
 Route::get( '/purchase/category', array( PurchaseController::class, 'category' ) )->name( 'purchase.category' );
 Route::get( '/purchase/product', array( PurchaseController::class, 'product' ) )->name( 'purchase.product' );
+Route::get( '/purchase/pending', array( PurchaseController::class, 'pending' ) )->name( 'purchase.pending' );
 
 // Product Routes.
 Route::resource(

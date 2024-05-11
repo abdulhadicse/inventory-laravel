@@ -58,21 +58,23 @@ class PurchaseService {
 	 * Update an existing purchase.
 	 *
 	 * @param string $id The ID of the purchase to update.
-	 * @param array  $purchaseData The updated data for the purchase.
 	 * @return Purchase The updated purchase instance.
-	 * @throws ModelNotFoundException
-	 * @throws ValidationException
 	 */
-	public function update( array $supplierData, string $id ): Purchase {
-		// Find supplier by ID.
-		$supplier = Purchase::findOrFail( $id );
+	public function update( string $id ): Purchase {
+		// Find purchase by ID.
+		$purchase = Purchase::findOrFail( $id );
 
-		// Update supplier data.
-		$supplier->fill( $supplierData );
-		$supplier->updated_by = Auth::id();
-		$supplier->save();
+		// Update product Quantity.
+		$product           = Product::where( 'id', $purchase->product_id )->first();
+		$product->quantity = (float) $purchase->buying_qty + (float) $product->quantity;
+		$product->save();
 
-		return $supplier;
+		// Update purchase data.
+		$purchase->status     = '1';
+		$purchase->updated_by = Auth::id();
+		$purchase->save();
+
+		return $purchase;
 	}
 
 	/**
@@ -125,5 +127,14 @@ class PurchaseService {
 		}
 
 		return false;
+	}
+
+	/**
+	 * List all purchases.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Collection
+	 */
+	public function pendingList() {
+		return Purchase::with( array( 'supplier:id,name', 'product:id,name', 'category:id,name' ) )->where( 'status', '0' )->latest()->get();
 	}
 }

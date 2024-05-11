@@ -60,6 +60,21 @@ class PurchaseController extends Controller {
 	}
 
 	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param ProductStoreRequest $request The request containing validated product data.
+	 * @param string              $id The ID of the product to update.
+	 * @return \Illuminate\Http\RedirectResponse Redirect to the product list view.
+	 */
+	public function update( string $id ) {
+		$this->purchaseService->update( $id );
+
+		toastr( 'Approved purchase successfully.', 'success' );
+
+		return redirect()->route( 'purchase.list' );
+	}
+
+	/**
 	 * Remove the specified purchase from storage.
 	 *
 	 * @param string $id The ID of the purchase to delete.
@@ -91,5 +106,15 @@ class PurchaseController extends Controller {
 	 */
 	public function product( Request $request ) {
 		return $this->purchaseService->getProducts( $request->category_id );
+	}
+
+	/**
+	 * Display a listing of pending purchases.
+	 *
+	 * @return \Illuminate\Contracts\View\View View containing the purchase creation form.
+	 */
+	public function pending() {
+		$pending = $this->purchaseService->pendingList();
+		return view( 'admin.modules.purchase.pending', compact( 'pending' ) );
 	}
 }
