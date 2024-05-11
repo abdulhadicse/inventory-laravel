@@ -8,29 +8,37 @@ use App\Services\Product\ProductService;
 use App\Services\Purchase\PurchaseService;
 use App\Http\Requests\Purchase\PurchaseStoreRequest;
 use App\Services\Supplier\SupplierService;
+use Illuminate\Http\RedirectResponse;
 
 class PurchaseController extends Controller {
-
+	/**
+	 * The PurchaseService instance.
+	 */
 	private PurchaseService $purchaseService;
 
 	/**
-	 * Constructor for ProductController.
+	 * Constructor for PurchaseController.
 	 *
-	 * @param ProductService $productService The ProductService instance.
+	 * @param PurchaseService $purchaseService The PurchaseService instance.
 	 */
 	public function __construct( PurchaseService $purchaseService ) {
 		$this->purchaseService = $purchaseService;
 	}
 
 	/**
-	 * Display a listing of the resource.
+	 * Display a listing of purchases.
+	 *
+	 * @return \Illuminate\Contracts\View\View View containing a list of purchases.
 	 */
 	public function index() {
-		return view( 'admin.modules.purchase.index' );
+		$purchases = $this->purchaseService->list();
+		return view( 'admin.modules.purchase.index', compact( 'purchases' ) );
 	}
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Show the form for creating a new purchase.
+	 *
+	 * @return \Illuminate\Contracts\View\View View containing the purchase creation form.
 	 */
 	public function create() {
 		$suppliers = ( new SupplierService() )->list();
@@ -38,7 +46,10 @@ class PurchaseController extends Controller {
 	}
 
 	/**
-	 * Store a newly created resource in storage.
+	 * Store a newly created purchase in storage.
+	 *
+	 * @param PurchaseStoreRequest $request The validated request object containing purchase data.
+	 * @return \Illuminate\Http\RedirectResponse Redirect to the purchase list page.
 	 */
 	public function store( PurchaseStoreRequest $request ) {
 		$this->purchaseService->store( $request->validated() );
@@ -49,38 +60,34 @@ class PurchaseController extends Controller {
 	}
 
 	/**
-	 * Display the specified resource.
+	 * Remove the specified purchase from storage.
+	 *
+	 * @param string $id The ID of the purchase to delete.
+	 * @return \Illuminate\Http\RedirectResponse Redirect to the purchase list page.
 	 */
-	public function show( string $id ) {
+	public function destroy( string $id ): RedirectResponse {
+		$this->purchaseService->deletePurchase( $id );
+
+		toastr( 'Purchase deleted successfully.', 'success' );
+
+		return redirect()->route( 'purchase.list' );
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
-	 */
-	public function edit( string $id ) {
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 */
-	public function update( Request $request, string $id ) {
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 */
-	public function destroy( string $id ) {
-	}
-
-	/**
-	 * Get category the specified resource from storage.
+	 * Get categories for the specified supplier.
+	 *
+	 * @param \Illuminate\Http\Request $request The request object containing supplier ID.
+	 * @return \Illuminate\Http\JsonResponse JSON response containing categories.
 	 */
 	public function category( Request $request ) {
 		return $this->purchaseService->getCategories( $request->supplier_id );
 	}
 
 	/**
-	 * Get product the specified resource from storage.
+	 * Get products for the specified category.
+	 *
+	 * @param \Illuminate\Http\Request $request The request object containing category ID.
+	 * @return \Illuminate\Http\JsonResponse JSON response containing products.
 	 */
 	public function product( Request $request ) {
 		return $this->purchaseService->getProducts( $request->category_id );

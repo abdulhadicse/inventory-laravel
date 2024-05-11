@@ -12,19 +12,19 @@ use Illuminate\Validation\ValidationException;
 class PurchaseService {
 
 	/**
-	 * List all suppliers.
+	 * List all purchases.
 	 *
 	 * @return \Illuminate\Database\Eloquent\Collection
 	 */
 	public function list() {
-		return Purchase::latest()->get();
+		return Purchase::with( array( 'supplier:id,name', 'product:id,name', 'category:id,name' ) )->latest()->get();
 	}
 
 	/**
-	 * Store a new supplier.
+	 * Store new purchases.
 	 *
-	 * @param array $supplierData The data for the new supplier.
-	 * @return Supplier The created supplier instance.
+	 * @param array $purchaseData The data for the new purchases.
+	 * @return bool True if the purchases are successfully stored, false otherwise.
 	 * @throws ValidationException
 	 */
 	public function store( array $purchaseData ): bool {
@@ -55,11 +55,11 @@ class PurchaseService {
 	}
 
 	/**
-	 * Update an existing supplier.
+	 * Update an existing purchase.
 	 *
-	 * @param string $id The ID of the supplier to update.
-	 * @param array  $supplierData The updated data for the supplier.
-	 * @return Supplier The updated supplier instance.
+	 * @param string $id The ID of the purchase to update.
+	 * @param array  $purchaseData The updated data for the purchase.
+	 * @return Purchase The updated purchase instance.
 	 * @throws ModelNotFoundException
 	 * @throws ValidationException
 	 */
@@ -76,30 +76,11 @@ class PurchaseService {
 	}
 
 	/**
-	 * Find a supplier by its ID.
+	 * Retrieve categories for a given supplier.
 	 *
-	 * @param string $id The ID of the supplier to find.
-	 * @return \App\Models\Supplier The supplier model instance.
-	 * @throws ModelNotFoundException If no supplier is found with the given ID.
+	 * @param string $supplier_id The ID of the supplier.
+	 * @return \Illuminate\Http\JsonResponse JSON response containing categories.
 	 */
-	public function findSupplier( string $id ) {
-		return Purchase::findOrFail( $id );
-	}
-
-	/**
-	 * Delete a supplier by its ID.
-	 *
-	 * @param string $id The ID of the supplier to delete.
-	 * @return bool True if the supplier is successfully deleted.
-	 * @throws ModelNotFoundException If no supplier is found with the given ID.
-	 */
-	public function deleteSupplier( string $id ) {
-		$supplier = Purchase::findOrFail( $id );
-		$supplier->delete();
-
-		return true;
-	}
-
 	public function getCategories( string $supplier_id ) {
 		if ( ! $supplier_id ) {
 			toastr( 'Invalid supplier', 'error' );
@@ -111,6 +92,12 @@ class PurchaseService {
 	}
 
 
+	/**
+	 * Retrieve products for a given category.
+	 *
+	 * @param string $category_id The ID of the category.
+	 * @return \Illuminate\Http\JsonResponse JSON response containing products.
+	 */
 	public function getProducts( string $category_id ) {
 		if ( ! $category_id ) {
 			toastr( 'Invalid Category', 'error' );
@@ -119,5 +106,24 @@ class PurchaseService {
 		$products = Product::where( 'category_id', $category_id )->get();
 
 		return response()->json( $products );
+	}
+
+	/**
+	 * Delete a purchase by its ID.
+	 *
+	 * @param string $id The ID of the purchase to delete.
+	 * @return bool True if the purchase is successfully deleted, false otherwise.
+	 * @throws ModelNotFoundException If no purchase is found with the given ID.
+	 */
+	public function deletePurchase( string $id ) {
+		$purchase = Product::findOrFail( $id );
+
+		if ( ! $purchase->status ) {
+			$purchase->delete();
+
+			return true;
+		}
+
+		return false;
 	}
 }
