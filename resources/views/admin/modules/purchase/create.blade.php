@@ -46,7 +46,7 @@
 
                                 <div class="col-md-4">
                                     <label for="supplier_id" class="">{{ __('Supplier Name') }}</label>
-                                    <select name="supplier_id" class="form-select" aria-label="Supplier" id="supplier_id">
+                                    <select name="supplier_id" class="form-select select2" aria-label="Supplier" id="supplier_id">
                                         <option value="" selected="">{{ __('Open this select supplier') }}</option>
                                         @foreach ($suppliers as $supplier)
                                             <option value="{{ $supplier->id }}">{{ $supplier->name }}
@@ -57,7 +57,7 @@
 
                                 <div class="col-md-4">
                                     <label for="category_id" class="col-form-label">{{ __('Category Name') }}</label>
-                                    <select name="category_id" class="form-select" aria-label="Supplier" id="category_id">
+                                    <select name="category_id" class="form-select select2" aria-label="Supplier" id="category_id">
                                         <option value="" selected="">{{ __('Open this select category') }}
                                         </option>
                                     </select>
@@ -65,7 +65,7 @@
 
                                 <div class="col-md-4">
                                     <label for="product_id" class="col-form-label">{{ __('Product Name') }}</label>
-                                    <select name="product_id" class="form-select" aria-label="Product" id="product_id">
+                                    <select name="product_id" class="form-select select2" aria-label="Product" id="product_id">
                                         <option value="" selected="">{{ __('Open this select product') }}
                                         </option>
                                     </select>
