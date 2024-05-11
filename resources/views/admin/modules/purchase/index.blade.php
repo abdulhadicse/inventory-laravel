@@ -67,7 +67,7 @@
                                                         <a href="#" onclick="event.preventDefault();
                                                         this.closest('form').submit();"
                                                             class="btn btn-outline-danger btn-sm edit" title="Delete">
-                                                            <i class="fas fas fa-times"></i>
+                                                            <i class="fas fa-trash"></i>
                                                         </a>
                                                     </form>
                                                 @endif
