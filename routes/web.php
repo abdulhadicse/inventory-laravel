@@ -128,30 +128,33 @@ Route::resource(
 	)
 )->middleware( 'auth' );
 
+Route::get( '/purchase/category', array( PurchaseController::class, 'category' ) )->name( 'purchase.category' );
+Route::get( '/purchase/product', array( PurchaseController::class, 'product' ) )->name( 'purchase.product' );
+
 // Product Routes.
 Route::resource(
 	'purchase',
 	PurchaseController::class,
 	array(
 		'names' => array(
-			'index'   => 'purchase.list',
-			'show'    => 'purchase.view',
-			'create'  => 'purchase.add',
-			'edit'    => 'purchase.edit',
-			'update'  => 'purchase.update',
-			'store'   => 'purchase.save',
-			'destroy' => 'purchase.delete',
+			'index'    => 'purchase.list',
+			'show'     => 'purchase.view',
+			'create'   => 'purchase.add',
+			'edit'     => 'purchase.edit',
+			'update'   => 'purchase.update',
+			'store'    => 'purchase.save',
+			'destroy'  => 'purchase.delete',
+			'category' => 'purchase.category',
+			'product'  => 'purchase.product',
 		),
 	)
 )->middleware( 'auth' );
 
 
-// Route::middleware( 'auth' )->group(
-// function () {
-// Route::get( '/supplier/all', array( SupplierController::class, 'all' ) )->name( 'supplier.all' );
-// Route::get( '/supplier/add', array( SupplierController::class, 'add' ) )->name( 'supplier.add' );
-// }
-// );
+
+
+
+
 
 // Route::controller( SupplierController::class )->middleware( 'auth' )->name( 'supplier.' )->group(
 // function () {
