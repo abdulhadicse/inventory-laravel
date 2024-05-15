@@ -138,23 +138,16 @@ Route::resource(
 	PurchaseController::class,
 	array(
 		'names' => array(
-			'index'    => 'purchase.list',
-			'show'     => 'purchase.view',
-			'create'   => 'purchase.add',
-			'edit'     => 'purchase.edit',
-			'update'   => 'purchase.update',
-			'store'    => 'purchase.save',
-			'destroy'  => 'purchase.delete',
-			'category' => 'purchase.category',
-			'product'  => 'purchase.product',
+			'index'   => 'purchase.list',
+			'show'    => 'purchase.view',
+			'create'  => 'purchase.add',
+			'edit'    => 'purchase.edit',
+			'update'  => 'purchase.update',
+			'store'   => 'purchase.save',
+			'destroy' => 'purchase.delete',
 		),
 	)
 )->middleware( 'auth' );
-
-
-
-
-
 
 
 // Route::controller( SupplierController::class )->middleware( 'auth' )->name( 'supplier.' )->group(
