@@ -6,6 +6,7 @@ use App\Http\Controllers\Pos\UnitController;
 use App\Http\Controllers\Pos\ProductController;
 use App\Http\Controllers\Pos\CategoryController;
 use App\Http\Controllers\Pos\CustomerController;
+use App\Http\Controllers\Pos\InvoiceController;
 use App\Http\Controllers\Pos\PurchaseController;
 use App\Http\Controllers\Pos\SupplierController;
 
@@ -112,6 +113,7 @@ Route::resource(
 )->middleware( 'auth' );
 
 // Product Routes.
+Route::get( '/product/stock', array( ProductController::class, 'stock' ) )->name( 'product.stock' );
 Route::resource(
 	'product',
 	ProductController::class,
@@ -150,11 +152,13 @@ Route::resource(
 )->middleware( 'auth' );
 
 
-// Route::controller( SupplierController::class )->middleware( 'auth' )->name( 'supplier.' )->group(
-// function () {
-// Route::get( '/supplier/all', 'all' )->name( 'all' );
-// Route::get( '/supplier/add', 'add' )->name( 'add' );
-// }
-// );
+Route::controller( InvoiceController::class )->middleware( 'auth' )->name( 'invoice.' )->group(
+	function () {
+		Route::get( '/invoice/list', 'index' )->name( 'list' );
+		Route::get( '/invoice/create', 'create' )->name( 'add' );
+		Route::post( '/invoice/store', 'store' )->name( 'save' );
+		Route::get( '/invoice/pending', 'pending' )->name( 'pending' );
+	}
+);
 
 require __DIR__ . '/auth.php';

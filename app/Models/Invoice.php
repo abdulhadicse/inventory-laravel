@@ -8,10 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasFactory;
-     /**
-	 * No fields are guarded.
-	 *
-	 * @var array
-	 */
-	protected $guarded = array();
+
+    protected $guarded = array();
+
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class, 'id', 'invoice_id');
+    }
+
+    public function invoice_details()
+    {
+        dd('call here');
+        return $this->hasMany(InvoiceDetail::class, 'invoice_id', 'id');
+    }
 }

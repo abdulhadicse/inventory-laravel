@@ -94,6 +94,18 @@
                         <li><a href="{{ route('purchase.pending') }}">{{ __('Approval Purchase') }}</a></li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-exchange-dollar-line"></i>
+                        <span>{{ __('Manage Invoices') }}</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('invoice.list') }}">{{ __('All Invoices') }}</a></li>
+                        <li><a href="{{ route('invoice.add') }}">{{ __('Add Invoice') }}</a></li>
+                        <li><a href="{{ route('invoice.pending') }}">{{ __('Approval Invoice') }}</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
         <!-- Sidebar -->

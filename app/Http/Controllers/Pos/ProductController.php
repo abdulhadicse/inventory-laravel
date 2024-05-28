@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pos;
 
+use Illuminate\Http\Request;
 use App\Services\Unit\UnitService;
 use App\Http\Controllers\Controller;
 use App\Services\Product\ProductService;
@@ -109,5 +110,16 @@ class ProductController extends Controller {
 		toastr( 'Product deleted successfully.', 'success' );
 
 		return redirect()->route( 'product.list' );
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param string $id The ID of the product to delete.
+	 * @return \Illuminate\Http\RedirectResponse Redirect to the product list view.
+	 */
+	public function stock( Request $request ) {
+		$product = $this->productService->findProduct( $request->product_id );
+		return response()->json( $product->quantity );
 	}
 }
