@@ -31,46 +31,46 @@
                             </p>
 
                             <table id="datatable" class="table table-bordered dt-responsive nowrap"
-                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                   style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
-                                    <tr>
-                                        <th>{{ __('Serial No') }}</th>
-                                        <th>{{ __('Date') }}</th>
-                                        <th>{{ __('Invoice No') }}</th>
-                                        <th>{{ __('Customer Name') }}</th>
-                                        <th>{{ __('Amount') }}</th>
-                                        <th>{{ __('Status') }}</th>
-                                        <th>{{ __('Actions') }}</th>
-                                    </tr>
+                                <tr>
+                                    <th>{{ __('Serial No') }}</th>
+                                    <th>{{ __('Date') }}</th>
+                                    <th>{{ __('Invoice No') }}</th>
+                                    <th>{{ __('Customer Name') }}</th>
+                                    <th>{{ __('Amount') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th>{{ __('Actions') }}</th>
+                                </tr>
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($invoices as $key => $invoice)
-                                        <tr>
-                                            <td>{{ $key + 1 }}</td>
-                                            <td>{{ $invoice->date }}</td>
-                                            <td>{{ $invoice->invoice_no }}</td>
-                                            <td>{{ $invoice['payment']['customer']['name'] }}</td>
-                                            <td>${{ $invoice['payment']['total_amount'] }}</td>
-                                            <td>{{ strtoupper(str_replace('_', ' ', $invoice['payment']['paid_status'])) }}</td>
-                                            <td style="width: 100px">
-                                                @if (!$invoice->status)
-                                                    <form style="display: inline-block" method="POST"
-                                                        action="{{ route('purchase.delete', $invoice->id) }}">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <a href="#"
-                                                            onclick="event.preventDefault();
+                                @foreach ($invoices as $key => $invoice)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $invoice->date }}</td>
+                                        <td>{{ $invoice->invoice_no }}</td>
+                                        <td>{{ $invoice->payment->customer->name }}</td>
+                                        <td>${{ $invoice->payment->total_amount }}</td>
+                                        <td>{{ strtoupper(str_replace('_', ' ', $invoice->payment->paid_status)) }}</td>
+                                        <td style="width: 100px">
+                                            @if (!$invoice->status)
+                                                <form style="display: inline-block" method="POST"
+                                                      action="{{ route('purchase.delete', $invoice->id) }}">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <a href="#"
+                                                       onclick="event.preventDefault();
                                                         this.closest('form').submit();"
-                                                            class="btn btn-outline-danger btn-sm edit" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </a>
-                                                    </form>
-                                                @endif
+                                                       class="btn btn-outline-danger btn-sm edit" title="Delete">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </form>
+                                            @endif
 
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
 
