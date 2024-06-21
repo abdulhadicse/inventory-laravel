@@ -39,7 +39,7 @@
                                     <th>{{ __('Invoice No') }}</th>
                                     <th>{{ __('Customer Name') }}</th>
                                     <th>{{ __('Amount') }}</th>
-                                    <th>{{ __('Status') }}</th>
+                                    <th>{{ __('Payment Status') }}</th>
                                     <th>{{ __('Actions') }}</th>
                                 </tr>
                                 </thead>
@@ -54,6 +54,10 @@
                                         <td>${{ $invoice->payment->total_amount }}</td>
                                         <td>{{ strtoupper(str_replace('_', ' ', $invoice->payment->paid_status)) }}</td>
                                         <td style="width: 100px">
+                                            <a href="{{ route('invoice.show', $invoice->id) }}"
+                                               class="btn btn-outline-info btn-sm edit" title="Edit">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
                                             @if (!$invoice->status)
                                                 <form style="display: inline-block" method="POST"
                                                       action="{{ route('purchase.delete', $invoice->id) }}">

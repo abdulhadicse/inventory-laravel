@@ -2,84 +2,114 @@
 @section('content')
     <div class="page-content">
         <div class="container-fluid">
-
             <!-- start page title -->
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">{{ __('Edit Product') }}</h4>
-
-                        <div class="page-title-right">
-                            <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">{{ __('Products') }}</a></li>
-                                <li class="breadcrumb-item active">{{ __('Edit Products') }}</li>
-                            </ol>
-                        </div>
-
+                        <h4 class="mb-sm-0">{{ __('Inovice Approve') }}</h4>
                     </div>
                 </div>
             </div>
             <!-- end page title -->
-
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
+                            <h4>Invoice No: #{{ $invoice->invoice_no }} - {{ date('d-m-Y', strtotime($invoice->date)) }}
+                            </h4>
+                            <br>
+                            <table class="table table-dark" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <p>Customer Info</p>
+                                        </td>
+                                        <td>
+                                            <p> Name: <strong> {{ $payment['customer']['name'] }} </strong> </p>
+                                        </td>
+                                        <td>
+                                            <p> Mobile: <strong> {{ $payment['customer']['mobile_no'] }} </strong> </p>
+                                        </td>
+                                        <td>
+                                            <p> Email: <strong> {{ $payment['customer']['email'] }} </strong> </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                            <h4 class="card-title">{{ __('Edit Supplier') }}</h4>
-                            <p class="card-title-desc">{{ __('Edit a products effortlessly with a streamlined form for quick integration.') }}</p>
-                            <form method="POST" action="{{ route('product.update', $product->id) }}">
+                            <form method="post" action="{{ route('invoice.store', $invoice->id) }}">
                                 @csrf
-                                @method('PUT')
-                                <div class="row mb-3">
-                                    <label for="name" class="col-sm-2 col-form-label">{{ __('Name') }}</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="name" type="text" placeholder="Product name"
-                                            id="name" value="{{ $product->name }}">
-                                    </div>
-                                </div>
+                                <table border="1" class="table table-dark" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Sl</th>
+                                            <th class="text-center">Category</th>
+                                            <th class="text-center">Product Name</th>
+                                            <th class="text-center" style="background-color: #8B008B">Current Stock</th>
+                                            <th class="text-center">Quantity</th>
+                                            <th class="text-center">Unit Price </th>
+                                            <th class="text-center">Total Price</th>
+                                        </tr>
 
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label">{{ __('Supplier Name') }}</label>
-                                    <div class="col-sm-10">
-                                        <select name="supplier_id" class="form-select" aria-label="Supplier">
-                                            <option selected="">{{ __('Open this select supplier') }}</option>
-                                            @foreach ( $suppliers as $supplier )
-                                                <option value="{{ $supplier->id }}" @selected($supplier->id == $product->supplier_id)>{{ $supplier->name }}</option>
-                                            @endforeach
-                                            </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label">{{ __('Unit Name') }}</label>
-                                    <div class="col-sm-10">
-                                        <select name="unit_id" class="form-select" aria-label="Unit">
-                                            <option selected="">{{ __('Open this select unit') }}</option>
-                                            @foreach ( $units as $unit )
-                                                <option value="{{ $unit->id }}" @selected($unit->id == $product->unit_id)>{{ $unit->name }}</option>
-                                            @endforeach
-                                            </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label">{{ __('Category Name') }}</label>
-                                    <div class="col-sm-10">
-                                        <select name="category_id" class="form-select" aria-label="Category">
-                                            <option selected="">{{ __('Open this select category') }}</option>
-                                            @foreach ( $categories as $category )
-                                                <option value="{{ $category->id }}" @selected($category->id == $product->category_id)>{{ $category->name }}</option>
-                                            @endforeach
-                                            </select>
-                                    </div>
-                                </div>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $total_sum = '0';
+                                        @endphp
+                                        @foreach ($invoice->invoiceDetails as $key => $details)
+                                            <tr>
+                                                <input type="hidden" name="category_id[]"
+                                                    value="{{ $details->category_id }}">
+                                                <input type="hidden" name="product_id[]"
+                                                    value="{{ $details->product_id }}">
+                                                <input type="hidden" name="selling_qty[{{ $details->id }}]"
+                                                    value="{{ $details->selling_qty }}">
 
-                                <button class="btn btn-dark waves-effect waves-light text-uppercase" type="submit">{{ __('Update Product') }}</button>
+                                                <td class="text-center">{{ $key + 1 }}</td>
+                                                <td class="text-center">{{ $details['category']['name'] }}</td>
+                                                <td class="text-center">{{ $details['product']['name'] }}</td>
+                                                <td class="text-center" style="background-color: #8B008B">
+                                                    {{ $details['product']['quantity'] }}</td>
+                                                <td class="text-center">{{ $details->selling_qty }}</td>
+                                                <td class="text-center">{{ $details->unit_price }}</td>
+                                                <td class="text-center">{{ $details->selling_price }}</td>
+                                            </tr>
+                                            @php
+                                                $total_sum += $details->selling_price;
+                                            @endphp
+                                        @endforeach
+                                        <tr>
+                                            <td colspan="6"> Sub Total </td>
+                                            <td> {{ $total_sum }} </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6"> Discount </td>
+                                            <td> {{ $payment->discount_amount }} </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6"> Paid Amount </td>
+                                            <td>{{ $payment->paid_amount }} </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6"> Due Amount </td>
+                                            <td> {{ $payment->due_amount }} </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6"> Grand Amount </td>
+                                            <td>{{ $payment->total_amount }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                @if (!$invoice->status)
+                                    <button type="submit" class="btn btn-info">Invoice Approve</button>
+                                @else
+                                    <p> <strong>Status:</strong> <i>Already Approved</i> </p>
+                                @endif
                             </form>
                         </div>
                     </div>
                 </div> <!-- end col -->
-            </div>
-            <!-- end row -->
-        </div> <!-- end col -->
+            </div> <!-- end row -->
+        </div> <!-- container-fluid -->
     </div>
 @endsection

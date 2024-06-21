@@ -103,7 +103,8 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('invoice.list') }}">{{ __('All Invoices') }}</a></li>
                         <li><a href="{{ route('invoice.add') }}">{{ __('Add Invoice') }}</a></li>
-                        <li><a href="{{ route('invoice.pending') }}">{{ __('Approval Invoice') }}</a></li>
+                        <li><a href="{{ route('invoice.pending') }}">{{ __('Pending Invoice') }}</a></li>
+                        <li><a href="{{ route('invoice.approval') }}">{{ __('Approval Invoice') }}</a></li>
                     </ul>
                 </li>
             </ul>

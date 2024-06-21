@@ -16,9 +16,8 @@ class Invoice extends Model
         return $this->belongsTo(Payment::class, 'id', 'invoice_id');
     }
 
-    public function invoice_details()
+    public function invoiceDetails()
     {
-        dd('call here');
         return $this->hasMany(InvoiceDetail::class, 'invoice_id', 'id');
     }
 }
