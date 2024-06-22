@@ -146,4 +146,11 @@ class InvoiceController extends Controller
         toastr('Invoice deleted Successfully', 'success');
          return redirect()->back();
     }
+
+    public function printInvoice(string $id)
+    {
+        $invoice = Invoice::with('invoiceDetails')->findOrFail($id);
+        $payment = Payment::where('invoice_id', $invoice->id)->first();
+        return view('admin.modules.invoice.print', compact('invoice', 'payment'));
+    }
 }

@@ -162,6 +162,8 @@ Route::controller(InvoiceController::class)->middleware('auth')->name('invoice.'
         Route::get('/invoice/approval', 'approvalInvoices')->name('approval');
         Route::get('/invoice/pending', 'pendingInvoices')->name('pending');
         Route::delete('/invoice/{id}/delete/', 'destroy')->name('delete');
+
+        Route::get('/invoice/{id}/print/', 'printInvoice')->name('print');
     }
 );
 

@@ -37,11 +37,9 @@
                                             <td> {{ date('d-m-Y', strtotime($item->date)) }} </td>
                                             <td> $ {{ $item['payment']['total_amount'] }} </td>
                                             <td>
-                                                @if ($item->status == '0')
-                                                    <span class="btn btn-warning">Pending</span>
-                                                @elseif($item->status == '1')
-                                                    <span class="btn btn-success">Approved</span>
-                                                @endif
+                                                <a href="{{ route('invoice.print', $item->id) }}">
+                                                    <span class="btn btn-danger"><i class="fa fa-print"></i></span>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
