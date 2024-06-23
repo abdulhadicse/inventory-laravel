@@ -59,7 +59,7 @@
                                         <div class="col-6 mt-4">
                                             <address>
                                                 <strong>Payment Status:</strong><br>
-                                                {{ ucwords(str_replace('_', ' ', $invoice->payment->paid_status)) }}
+                                                {{ $invoice->payment->paid_status }}
                                             </address>
                                         </div>
                                         <div class="col-6 mt-4 text-end">

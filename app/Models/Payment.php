@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Payment extends Model
 {
-
     use HasFactory;
 
     protected $guarded = array();
+
+    public function getPaidStatusAttribute($value)
+    {
+        return ucwords(str_replace('_', ' ', $value));
+    }
 
     public function customer(): BelongsTo
     {
