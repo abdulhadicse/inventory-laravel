@@ -4,15 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Supplier extends Model {
+class Supplier extends Model
+{
+    use HasFactory;
+    use SoftDeletes;
 
-	use HasFactory;
+    protected $dates = ['deleted_at'];
 
-	/**
-	 * No fields are guarded.
-	 *
-	 * @var array
-	 */
-	protected $guarded = array();
+    /**
+     * No fields are guarded.
+     *
+     * @var array
+     */
+    protected $guarded = array();
 }
